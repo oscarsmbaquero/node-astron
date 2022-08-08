@@ -9,7 +9,12 @@ const avisosSchema = new Schema(
     averia: { type: String, required: true },
     prioridad: { type: String, required: true },
     estado: { type: String, required: true },
-    tecnico: { type: String, required: true },
+    tecnico: { type: String, required: false },
+    intervencion: { type: String, required:false},
+    fecha_inicio: { type: String, required:false},
+    fecha_fin: {type: String, required:false},
+    km: {type: String, required:false},
+    user_assigned: [{ type: mongoose.Types.ObjectId, ref: 'User', required: false }],
   },
   {
     timestamps: true,

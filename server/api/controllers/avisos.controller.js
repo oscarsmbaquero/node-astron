@@ -63,13 +63,13 @@ const getAvisos = async ( req, res, next) =>{
 
 const editAviso = async (req, res, next) => {
     try {
-      const { avisoId } = req.params;
-      console.log(avisoId);
+      const { id } = req.params;
+      console.log(id);
       const avisoModify = new Avisos(req.body);
       //Para evitar que se modifique el id de mongo:
-      avisoModify._id = avisoId;
+      avisoModify._id = id;
       const avisoUpdated = await Avisos.findByIdAndUpdate(
-        avisoId,
+        id,
         avisoModify
       );
       return res.json({
@@ -83,81 +83,27 @@ const editAviso = async (req, res, next) => {
 };
 
 
-// const getJobById = async (req, res, next) => {
+const getAvisoById = async (req, res, next) => {
 
-//     try {
+    try {
+        console.log('Entro');
+        const { id } = req.params;
+        console.log(id);
+        const avisoById = await Avisos.findById(id);
+        return res.status(200).json(avisoById);
+        // return res.json({
+        //     status: 200,
+        //     message: httpStatusCode[200],
+        //     data: { jobs: jobbyid },
+        // });
+        //res.send(jobbyid);
+    } catch (error) {
+        return next(error)
+    }
+};
 
-//         const { id } = req.params;
 
-//         const jobById = await Job.findById(id);
-//         return res.status(200).json(jobById);
-//         // return res.json({
-//         //     status: 200,
-//         //     message: httpStatusCode[200],
-//         //     data: { jobs: jobbyid },
-//         // });
-//         //res.send(jobbyid);
-//     } catch (error) {
-//         return next(error)
-//     }
-// };
 
-// const getJobByRecruiter = async (req, res, next) => {
-
-//     try {
-//         const { id } = req.authority;
-//         const jobByRecrutier = await Job.find({ recruiter_id: id });
-
-//         return res.status(200).json(jobByRecrutier);
-//         // return res.json({
-//         //     status: 200,
-//         //     message: httpStatusCode[200],
-//         //     data: { jobs: jobbyid },
-//         // });
-//     } catch (error) {
-//         return next(error)
-//     }
-// };
-
-// //----------------------------CREATE JOB
-// const createJob = async (req, res, next) => {
-
-//     const { body } = req;
-//     const { id: userId, rol } = req.authority
-
-//     try {
-
-//         if (rol !== "Recruiter") {
-//             const error = {
-//                 status: 401,
-//                 message: 'You are not a recruiter, you cannot create jobs'
-//             };
-//             return next(error);
-//         };
-
-//         const newJob = new Job({
-//             name: body.name,
-//             recruiter_id: userId,
-//             salary: body.salary,
-//             description: body.description,
-//             requiremets: body.requiremets,
-//         });
-
-//         const savedJob = await newJob.save();
-
-//         await User.findByIdAndUpdate(userId, { $push: { created_jobs: savedJob._id } })
-
-//         return res.json({
-//             status: 201,
-//             message: 'Job Registered successfully',
-//             data: savedJob
-//         });
-
-//     } catch (error) {
-//         return next(error);
-
-//     }
-// };
 
 // //FUNCION PARA VINCULAR USUARIO A OFERTA DE TRABAJO- EN PRUEBAS-- OSCAR
 // const addUserToJob = async (req, res, next) => {
@@ -280,4 +226,4 @@ const editAviso = async (req, res, next) => {
 // };
 
 
-export { getAvisos, createAvisos, deleteAviso, editAviso };
+export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById };

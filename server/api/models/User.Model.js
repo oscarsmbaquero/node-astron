@@ -5,6 +5,10 @@ const userSchema = new Schema(
   {
     email: { type: String, required: true },
     password: { type: String, required: true },
+    name: { type: String, required: false },
+    surname: { type: String, required: false },
+    account_type: { type: String, required: true },
+    assigned_avisos: [{ type: mongoose.Types.ObjectId, ref: 'Avisos', required: false }],
   },
   {
     timestamps: true,
