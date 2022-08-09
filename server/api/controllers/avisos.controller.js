@@ -22,7 +22,7 @@ const getAvisos = async ( req, res, next) =>{
   };
 
   const createAvisos = async ( req, res, next) => {
-    console.log('yes');
+    
       try {
           const NewAviso = new Avisos({
             n_incidencia : req.body.n_incidencia,
@@ -32,7 +32,7 @@ const getAvisos = async ( req, res, next) =>{
             prioridad : req.body.prioridad,
             estado : req.body.estado,
             tecnico : req.body.tecnico,
-              image : req.body.image,
+            image : req.body.image,
           })
   
           const newAvisoDB = await NewAviso.save();
@@ -101,6 +101,40 @@ const getAvisoById = async (req, res, next) => {
         return next(error)
     }
 };
+
+const AddIntervencion = async  (req, res, next) =>{
+  
+   try {    
+    const { id } = req.params;
+    const { intervencion, km }=req.body;
+    
+    
+    const findAviso = await Avisos.findById(id);
+    const AddIntervencion = new Avisos({
+      intervencion : req.body.intervencion,
+      fecha_fin : req.body.fecha_fin,
+      fecha_inicio: req.body.fecha_inicio,
+      km: req.body.km
+      
+    });
+    console.log(findAviso);
+    await Avisos.updateOne(
+      { _id: id },
+      { $push: { intervencion: intervencion } },
+      { new: true }
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { km: km } },
+    { new: true }
+);
+
+
+   } catch (error) {
+    
+   }
+
+}
 
 
 
@@ -226,4 +260,4 @@ const getAvisoById = async (req, res, next) => {
 // };
 
 
-export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById };
+export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById, AddIntervencion };
