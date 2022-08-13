@@ -3,23 +3,41 @@ import { httpStatusCode } from "../../utils/httpStatusCode.js";
 
 
 
+
 const getAvisos = async ( req, res, next) =>{
-    console.log('Entro');
-      try {
-          const avisos = await Avisos.find();
-          console.log(avisos);
-          return res.status(200).json(avisos);
-           console.log(avisos);
-          return res.json({
-            //  status : 200,
-            //  message : httpStatusCode[200],
-             data : { avisos: avisos },
-          });
-          res.send(avisos);
-      } catch (error) {
-          return next(error)
-      }
-  };
+  // console.log('Entro');
+    try {
+        const avisos = await Avisos.find().populate(({path:'user', select :'name'}));
+        console.log(avisos);
+        return res.status(200).json(avisos);
+         console.log(avisos);
+        return res.json({
+          //  status : 200,
+          //  message : httpStatusCode[200],
+           data : { avisos: avisos },
+        });
+        res.send(avisos);
+    } catch (error) {
+        return next(error)
+    }
+};
+// const getAvisos = async ( req, res, next) =>{
+//     // console.log('Entro');
+//       try {
+//           const avisos = await Avisos.find().populate(({path:'user', select :'name'}));
+//           console.log(avisos);
+//           return res.status(200).json(avisos);
+//            console.log(avisos);
+//           return res.json({
+//             //  status : 200,
+//             //  message : httpStatusCode[200],
+//              data : { avisos: avisos },
+//           });
+//           res.send(avisos);
+//       } catch (error) {
+//           return next(error)
+//       }
+//   };
 
   const createAvisos = async ( req, res, next) => {
     
@@ -27,6 +45,7 @@ const getAvisos = async ( req, res, next) =>{
           const NewAviso = new Avisos({
             n_incidencia : req.body.n_incidencia,
             localidad : req.body.localidad,
+            provincia : req.body.provincia,
             centro : req.body.centro,
             averia : req.body.averia,
             prioridad : req.body.prioridad,
@@ -61,10 +80,11 @@ const getAvisos = async ( req, res, next) =>{
     }
 };
 
+
 const editAviso = async (req, res, next) => {
     try {
       const { id } = req.params;
-      console.log(id);
+      console.log(req.body,87);
       const avisoModify = new Avisos(req.body);
       //Para evitar que se modifique el id de mongo:
       avisoModify._id = id;
@@ -106,28 +126,46 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km }=req.body;
-    
-    
-    const findAviso = await Avisos.findById(id);
-    const AddIntervencion = new Avisos({
-      intervencion : req.body.intervencion,
-      fecha_fin : req.body.fecha_fin,
-      fecha_inicio: req.body.fecha_inicio,
-      km: req.body.km
-      
-    });
-    console.log(findAviso);
-    await Avisos.updateOne(
-      { _id: id },
-      { $push: { intervencion: intervencion } },
-      { new: true }
-  );
+    const { intervencion, km, fecha_fin,fecha_inicio,estado }=req.body;
+    // const avisoModify = new Avisos(req.body);
+    // avisoModify._id = id;
+    //modifico el estado
+    console.log(estado,133);
+    const avisoUpdated = await Avisos.findByIdAndUpdate(
+      id,
+      {estado:estado}
+    );
+    // await Avisos.updateOne(
+    //   { _id: id },
+    //   { $push: { estado: estado } },
+    //   { new: true }
+    // );
+    //añadimos los campos de intervención
   await Avisos.updateOne(
     { _id: id },
     { $push: { km: km } },
     { new: true }
-);
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { intervencion: intervencion } },
+    { new: true }
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { fecha_fin: fecha_fin } },
+    { new: true }
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { fecha_inicio: fecha_inicio } },
+    { new: true }
+  ); await Avisos.updateOne(
+    { _id: id },
+    { $push: { estado: estado } },
+    { new: true }
+  );
+  
 
 
    } catch (error) {

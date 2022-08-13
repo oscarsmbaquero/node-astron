@@ -5,6 +5,7 @@ const avisosSchema = new Schema(
   {
     n_incidencia: { type: String, required: true },
     localidad: { type: String, required: true },
+    provincia: { type: String, required: true },
     centro: { type: String, required: true },
     averia: { type: String, required: true },
     prioridad: { type: String, required: true },
@@ -15,6 +16,8 @@ const avisosSchema = new Schema(
     fecha_fin: {type: String, required:false},
     km: {type: Number, required:false},
     user_assigned: [{ type: mongoose.Types.ObjectId, ref: 'User', required: false }],
+    
+    user: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

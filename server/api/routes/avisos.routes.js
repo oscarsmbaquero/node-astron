@@ -13,6 +13,8 @@ import {  getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById, AddInte
   avisosRoutes.delete("/:avisoId",[isAuth], deleteAviso);
   avisosRoutes.put("/:id", editAviso);
   avisosRoutes.post("/:id", AddIntervencion);
+  
+  
 //  userRoutes.post('/login/',loginUser);
 
 

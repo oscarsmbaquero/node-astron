@@ -55,7 +55,6 @@ const  registerUser = async(req, res, next) =>{
 };
 
 const loginUser = async (req, res, next)=>{
-  console.log('Entro');
   try {
           const { body } = req;
           console.log(body,60);
@@ -132,22 +131,25 @@ const deleteUser = async (req, res, next) => {
 
 const addNewAviso = ('/', async (req, res, next) => {
   
-  console.log('entroHostias');
-  const { userId } = req.body;
-  const { avisoId } = req.body;
-  console.log(avisoId,userId,137);
+  
+  const { userId, avisoId, estado } = req.body;
+
+
   try {
 
-    
-
-     const updatedUser = await User.findByIdAndUpdate(
+   
+    const estadoModify = await Avisos.findByIdAndUpdate(
+      avisoId,
+      {estado:estado}
+    );
+    const updatedUser = await User.findByIdAndUpdate(
       userId,
         { $push: { assigned_avisos: avisoId } },
         { new: true }
     );
     const updatedAviso = await Avisos.findByIdAndUpdate(
       avisoId,
-        { $push: { avisos_assigned: userId } },
+        { $push: { user_assigned: userId } },
         { new: true }
     );
     return res.status(200).json(updatedUser);
@@ -157,10 +159,44 @@ const addNewAviso = ('/', async (req, res, next) => {
 
 }
 })
+const deleteAssign = ('/', async (req, res, next) => {
+  console.log('Me cago en tu puta madre');
+  const { userId,estado, avisoId } = req.body;
+    console.log(avisoId,'id');
+    console.log(userId, 'incidencia');
+    console.log(estado, 'estado');
+ try {
+    
+
+  const estadoModify = await Avisos.findByIdAndUpdate(
+    avisoId,
+    {estado:estado}
+ );
+//   const updatedUser = await User.findByIdAndUpdate(
+//     userId,
+//       { $pull: { assigned_avisos: avisoId } },
+//       { new: true }
+//   );
+//   const updatedAviso = await Avisos.findByIdAndUpdate(
+//     avisoId,
+//       { $pull: { user_assigned: userId } },
+//       { new: true }
+//   );
+    return res.status(200).json(estadoModify);
+    // const avisoDelete = await Avisos.findByIdAndDelete(avisoId);
+    // return res.json({
+    //   status: 200,
+    //   message: httpStatusCode[200],
+    //   data: { aviso: updatedAviso },
+    // });
+  } catch (error) {
+    return next(error);
+  }
+});
 
 
 
 
 
 
-  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, addNewAviso };
+  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, addNewAviso, deleteAssign };
