@@ -168,6 +168,25 @@ const AddIntervencion = async  (req, res, next) =>{
 
 }
 
+const ShowIntervencion = async (req, res, next) =>{
+
+  try {
+    console.log('Entro o no entro');
+    const { id } = req.params;
+    console.log(id);
+    const avisoById = await Avisos.findById(id);
+    return res.status(200).json(avisoById);
+    // return res.json({
+    //     status: 200,
+    //     message: httpStatusCode[200],
+    //     data: { jobs: jobbyid },
+    // });
+    //res.send(jobbyid);
+} catch (error) {
+    return next(error)
+}
+}
+
 
 
 
@@ -292,4 +311,4 @@ const AddIntervencion = async  (req, res, next) =>{
 // };
 
 
-export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById, AddIntervencion };
+export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById, AddIntervencion, ShowIntervencion };
