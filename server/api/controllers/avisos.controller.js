@@ -135,11 +135,6 @@ const AddIntervencion = async  (req, res, next) =>{
       id,
       {estado:estado}
     );
-    // await Avisos.updateOne(
-    //   { _id: id },
-    //   { $push: { estado: estado } },
-    //   { new: true }
-    // );
     //añadimos los campos de intervención
   await Avisos.updateOne(
     { _id: id },
@@ -165,7 +160,6 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { estado: estado } },
     { new: true }
   );
-  
 
 
    } catch (error) {

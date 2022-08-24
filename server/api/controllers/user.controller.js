@@ -129,7 +129,7 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-const addNewAviso = ('/', async (req, res, next) => {
+const assignAviso = ('/', async (req, res, next) => {
   
   
   const { userId, avisoId, estado } = req.body;
@@ -159,18 +159,20 @@ const addNewAviso = ('/', async (req, res, next) => {
 
 }
 })
-const deleteAssign = ('/', async (req, res, next) => {
+const reAssignAviso = ('/', async (req, res, next) => {
   console.log('Me cago en tu puta madre');
   const { userId,estado, avisoId } = req.body;
-    console.log(avisoId,'id');
-    console.log(userId, 'incidencia');
+    console.log(avisoId,'id_aviso');
+    console.log(userId, 'id_tecnico');
     console.log(estado, 'estado');
  try {
     
 
   const estadoModify = await Avisos.findByIdAndUpdate(
     avisoId,
-    {estado:estado}
+    {estado:estado,
+     user_assigned:userId 
+    }
  );
 //   const updatedUser = await User.findByIdAndUpdate(
 //     userId,
@@ -199,4 +201,4 @@ const deleteAssign = ('/', async (req, res, next) => {
 
 
 
-  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, addNewAviso, deleteAssign };
+  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, assignAviso, reAssignAviso };
