@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const avisosSchema = new Schema(
+
+  //forzar commit 
   {
     n_incidencia: { type: String, required: true },
     localidad: { type: String, required: true },
