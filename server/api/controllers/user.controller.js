@@ -14,6 +14,23 @@ const getUsers = async (req,res,next) =>{
   }
 };
 
+const deleteUser = async (req, res, next) => {
+
+  console.log('Entro');
+  try {
+    const { userId } = req.params;
+    console.log(userId,'usuario');
+    const userDelete = await User.findByIdAndDelete(userId);
+    return res.json({
+      status: 200,
+      message: httpStatusCode[200],
+      data: { user: userDelete },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 
 const  registerUser = async(req, res, next) =>{
   try {
@@ -115,19 +132,7 @@ const logoutUser = async (req, res, next) => {
   }
 };
 
-const deleteUser = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const userDelete = await User.findByIdAndDelete(id);
-    return res.json({
-      status: 200,
-      message: httpStatusCode[200],
-      data: { user: userDelete },
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
+
 
 const assignAviso = ('/', async (req, res, next) => {
   
