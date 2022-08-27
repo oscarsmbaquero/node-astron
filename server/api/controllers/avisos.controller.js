@@ -126,7 +126,7 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km, fecha_fin,fecha_inicio,estado }=req.body;
+    const { intervencion, km, fecha_fin,fecha_inicio,estado,viaje }=req.body;
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
@@ -160,7 +160,11 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { estado: estado } },
     { new: true }
   );
-
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { viaje: viaje } },
+    { new: true }
+  );
 
    } catch (error) {
     
