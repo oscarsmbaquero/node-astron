@@ -201,9 +201,31 @@ const reAssignAviso = ('/', async (req, res, next) => {
   }
 });
 
+const getUserById = async (req, res, next) => {
+
+  try {
+      console.log('Entrossss');
+      const { id } = req.params;
+      console.log(id);
+      const userById = await User.findById(id)
+      .populate(({path:'assigned_avisos', select :'centro'}))
+
+      
+      return res.status(200).json(userById);
+      // return res.json({
+      //     status: 200,
+      //     message: httpStatusCode[200],
+      //     data: { jobs: jobbyid },
+      // });
+      //res.send(jobbyid);
+  } catch (error) {
+      return next(error)
+  }
+};
 
 
 
 
 
-  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, assignAviso, reAssignAviso };
+
+  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, assignAviso, reAssignAviso, getUserById };
