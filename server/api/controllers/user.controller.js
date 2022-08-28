@@ -108,7 +108,8 @@ const loginUser = async (req, res, next)=>{
               email: user.email,
               token: token,
               name:user.name,
-              rol: user.account_type
+              rol: user.account_type,
+              image: user.image,
             },
           });
         } catch (error) {
