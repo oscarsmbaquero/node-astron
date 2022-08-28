@@ -7,7 +7,7 @@ import { httpStatusCode } from "../../utils/httpStatusCode.js";
 const getAvisos = async ( req, res, next) =>{
   // console.log('Entro');
     try {
-        const avisos = await Avisos.find().populate(({path:'user', select :'name'}));
+        const avisos = await Avisos.find().populate(({path:'user_assigned', select :'name'}));
         console.log(avisos);
         return res.status(200).json(avisos);
          console.log(avisos);

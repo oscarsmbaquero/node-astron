@@ -180,11 +180,11 @@ const reAssignAviso = ('/', async (req, res, next) => {
      user_assigned:userId 
     }
  );
-//   const updatedUser = await User.findByIdAndUpdate(
-//     userId,
-//       { $pull: { assigned_avisos: avisoId } },
-//       { new: true }
-//   );
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+      { $pull: { assigned_avisos: avisoId } },
+      { new: true }
+  );
 //   const updatedAviso = await Avisos.findByIdAndUpdate(
 //     avisoId,
 //       { $pull: { user_assigned: userId } },
