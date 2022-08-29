@@ -167,10 +167,11 @@ const assignAviso = ('/', async (req, res, next) => {
 })
 const reAssignAviso = ('/', async (req, res, next) => {
   console.log('Me cago en tu puta madre');
-  const { userId,estado, avisoId } = req.body;
+  const { userId, estado, avisoId, idUserOld } = req.body;
     console.log(avisoId,'id_aviso');
     console.log(userId, 'id_tecnico');
     console.log(estado, 'estado');
+    console.log(idUserOld,'tecnico antiguo');
  try {
     
 
@@ -180,23 +181,19 @@ const reAssignAviso = ('/', async (req, res, next) => {
      user_assigned:userId 
     }
  );
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-      { $pull: { assigned_avisos: avisoId } },
-      { new: true }
-  );
-//   const updatedAviso = await Avisos.findByIdAndUpdate(
-//     avisoId,
-//       { $pull: { user_assigned: userId } },
-//       { new: true }
-//   );
+
+ const updatedAvisoUser = await User.findByIdAndUpdate(
+  idUserOld,
+    { $pull: { assigned_avisos: avisoId } },
+    { new: true }
+);
+const updatedAvisoUser2 = await User.findByIdAndUpdate(
+  userId,
+    { $push: { assigned_avisos: avisoId } },
+    { new: true }
+);
+ 
     return res.status(200).json(estadoModify);
-    // const avisoDelete = await Avisos.findByIdAndDelete(avisoId);
-    // return res.json({
-    //   status: 200,
-    //   message: httpStatusCode[200],
-    //   data: { aviso: updatedAviso },
-    // });
   } catch (error) {
     return next(error);
   }
