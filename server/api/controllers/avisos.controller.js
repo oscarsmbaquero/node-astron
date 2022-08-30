@@ -70,6 +70,8 @@ const getAvisos = async ( req, res, next) =>{
       const { avisoId } = req.params;
       console.log(avisoId);
       const avisoDelete = await Avisos.findByIdAndDelete(avisoId);
+
+      
       return res.json({
         status: 200,
         message: httpStatusCode[200],

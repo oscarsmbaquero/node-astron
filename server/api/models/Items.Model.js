@@ -13,4 +13,4 @@ const itemsSchema = new Schema(
 
 const Items = mongoose.model('Items',itemsSchema );
 
-export { Certificaciones }
+export { Items }
