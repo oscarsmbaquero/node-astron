@@ -32,17 +32,19 @@ const deleteUser = async (req, res, next) => {
 };
 
 const editUser = async (req, res, next) => {
- console.log('entro');
+ 
   const userPhoto = req.file_url;// me traigo la url de la foto
+  console.log(userPhoto,37);
   const bodyData = req.body;
 
-  if (userPhoto) { bodyData.image = userPhoto }
+  //if (userPhoto) { bodyData.image = userPhoto }
   const { id: userId } = req.authority;
-   console.log(userId,41)
+  //{ bodyData.image = userPhoto }
   try {
     const user = await User.findById(userId)
     const userModify = new User(bodyData);
 
+    console.log(userModify,41)
     //Para evitar que se modifique el id de mongo:
     userModify._id = userId;
     //buscamos por el id y le pasamos los campos a modificar
@@ -55,11 +57,30 @@ const editUser = async (req, res, next) => {
       data: { user: userModify },
     });
   } catch (error) {
-    return next(error);
+    console.error(error);
   }
 };
+// const editUser = async (req, res, next)=>{
+//    try {
+//          const { id: userId } = req.authority;
+//          const userPhoto = req.file_url;
+//          const bodyData = req.body;
+//          bodyData.image = userPhoto;
+
+//          console.log(bodyData,7070);
+//          const userModify = new User(bodyData);
+//          userModify._id = userId;
+        
+//          console.log(userModify,73);
+//            await User.findByIdAndUpdate(userId, userModify);
+
+//    }catch{
 
 
+
+
+//    }
+// }
 const  registerUser = async(req, res, next) =>{
   try {
     const { body } = req;
