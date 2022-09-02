@@ -31,6 +31,34 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+const editUser = async (req, res, next) => {
+ console.log('entro');
+  const userPhoto = req.file_url;// me traigo la url de la foto
+  const bodyData = req.body;
+
+  if (userPhoto) { bodyData.image = userPhoto }
+  const { id: userId } = req.authority;
+   console.log(userId,41)
+  try {
+    const user = await User.findById(userId)
+    const userModify = new User(bodyData);
+
+    //Para evitar que se modifique el id de mongo:
+    userModify._id = userId;
+    //buscamos por el id y le pasamos los campos a modificar
+    await User.findByIdAndUpdate(userId, userModify);
+
+    //retornamos respuesta de  los datos del objeto creado 
+    return res.json({
+      status: 200,
+      message: httpStatusCode[200],
+      data: { user: userModify },
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 
 const  registerUser = async(req, res, next) =>{
   try {
@@ -226,4 +254,4 @@ const getUserById = async (req, res, next) => {
 
 
 
-  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, assignAviso, reAssignAviso, getUserById };
+  export { registerUser, getUsers, loginUser, logoutUser, deleteUser, editUser, assignAviso, reAssignAviso, getUserById };
