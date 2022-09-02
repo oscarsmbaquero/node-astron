@@ -10,7 +10,7 @@ import { registerUser, getUsers, deleteUser, editUser, loginUser, logoutUser,ass
 
  userRoutes.get('/', getUsers);
  userRoutes.delete("/:userId", deleteUser);
- userRoutes.put('/edit', [isAuth, upload.single('image'), uploadToCloudinary], editUser);
+ userRoutes.patch('/edit', [isAuth, upload.single('image'), uploadToCloudinary], editUser);
  userRoutes.post('/register/',registerUser);
  userRoutes.post('/login/',loginUser);
  userRoutes.post('/logout/',logoutUser);
