@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "builds":[
+        {
+            "src":"./index.js",
+            "use": "@vervel/node"
+        }
+
+    ],
+    "routes":[
+        {
+            "src": "/(.*)",
+            "dest":"/"
+        }
+    ]
+}
