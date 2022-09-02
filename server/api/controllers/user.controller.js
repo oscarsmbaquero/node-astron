@@ -37,9 +37,9 @@ const editUser = async (req, res, next) => {
   console.log(userPhoto,37);
   const bodyData = req.body;
 
-  //if (userPhoto) { bodyData.image = userPhoto }
+  if (userPhoto) { bodyData.image = userPhoto }
   const { id: userId } = req.authority;
-  //{ bodyData.image = userPhoto }
+  
   try {
     const user = await User.findById(userId)
     const userModify = new User(bodyData);
