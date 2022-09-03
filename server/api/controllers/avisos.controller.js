@@ -128,11 +128,11 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km, fecha_fin,fecha_inicio,estado,viaje }=req.body;
+    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion }=req.body;
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
-    console.log(estado,133);
+    console.log(tecnicoIntervencion,viaje,133);
     const avisoUpdated = await Avisos.findByIdAndUpdate(
       id,
       {estado:estado}
@@ -157,14 +157,15 @@ const AddIntervencion = async  (req, res, next) =>{
     { _id: id },
     { $push: { fecha_inicio: fecha_inicio } },
     { new: true }
-  ); await Avisos.updateOne(
-    { _id: id },
-    { $push: { estado: estado } },
-    { new: true }
   );
   await Avisos.updateOne(
     { _id: id },
     { $push: { viaje: viaje } },
+    { new: true }
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { tecnicoIntervencion: tecnicoIntervencion } },
     { new: true }
   );
 
