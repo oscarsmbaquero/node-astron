@@ -12,8 +12,9 @@ import { DB_URL, connect } from "./server/config/db.js";
  import { userRoutes } from "./server/api/routes/user.routes.js";
  import { avisosRoutes } from './server/api/routes/avisos.routes.js';
  import { certificacionesRoutes } from './server/api/routes/certificaciones.routes.js';
- import { itemsRoutes } from './server/api/routes/items.routes.js';//circuitRoutes
-// import { calendarRoutes } from './server/api/routes/calendar.routes.js';
+ import { itemsRoutes } from './server/api/routes/items.routes.js';
+ import { materialRoutes } from './server/api/routes/material.routes.js';
+
 
 
 
@@ -40,6 +41,7 @@ server.use("/avisos", avisosRoutes);
 server.use("/certificaciones", certificacionesRoutes);
 server.use("/users", userRoutes);
 server.use("/items", itemsRoutes);
+server.use("/material", materialRoutes);
 
 
 
