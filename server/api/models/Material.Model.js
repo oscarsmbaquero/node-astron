@@ -7,7 +7,9 @@ const materialSchema = new Schema(
      estado: { type:String, required:true },
      incidencia: { type:String, required:false },
      almacen: { type:String, required:true },
-     unidades: { type:String, required:true },
+     unidades: { type:Number, required:true },
+     
+     user: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
     },
     {
         timestamps:true,

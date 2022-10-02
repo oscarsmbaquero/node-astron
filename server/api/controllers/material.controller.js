@@ -5,10 +5,10 @@ import { httpStatusCode } from "../../utils/httpStatusCode.js";
 import { Material } from "../models/Material.Model.js";
 
 const getMaterial = async (req,res,next) => {
-console.log('Entro');
+
     try {
         const material = await Material.find();
-        console.log(material);
+        
         return res.status(200).json(material);
     } catch (error) {
         return next(error)        
@@ -38,6 +38,26 @@ console.log('Entro');
     }
 };
 
+const getMaterialByTecnico = async (req, res, next) => {
 
-export { getMaterial, addMaterial };
+  try {
+      console.log('Entro');
+      const { id } = req.params;
+      //const { id: userId } = req.authority;
+      console.log(id,'id');
+      const materialById = await Material.find({almacen : id}).populate(({path:'user', select :'name'}));
+      return res.status(200).json(materialById);
+      // return res.json({
+      //     status: 200,
+      //     message: httpStatusCode[200],
+      //     data: { jobs: jobbyid },
+      // });
+      //res.send(jobbyid);
+  } catch (error) {
+      return next(error)
+  }
+};
+
+
+export { getMaterial, addMaterial, getMaterialByTecnico };
 //getMaterialByUser, addMaterial
