@@ -8,9 +8,9 @@ const getAvisos = async ( req, res, next) =>{
   // console.log('Entro');
     try {
         const avisos = await Avisos.find().populate(({path:'user_assigned', select :'name'}));
-        console.log(avisos);
+        //console.log(avisos);
         return res.status(200).json(avisos);
-         console.log(avisos);
+         //console.log(avisos);
         return res.json({
           //  status : 200,
           //  message : httpStatusCode[200],

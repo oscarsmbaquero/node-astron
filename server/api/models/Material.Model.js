@@ -7,9 +7,12 @@ const materialSchema = new Schema(
      estado: { type:String, required:true },
      incidencia: { type:String, required:false },
      almacen: { type:String, required:true },
-     unidades: { type:Number, required:true },
-     
-     user: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+     unidades: { type:Number, required:true }, 
+     tipo: { type:String, required: true }, 
+
+     user_name: { type: mongoose.Types.ObjectId, ref: 'User' , required: false },
+     //user_assigned: { type: mongoose.Types.ObjectId, ref: 'User', required: false },
+     //user_assigned: { type: mongoose.Types.ObjectId, ref: 'User', required: false },
     },
     {
         timestamps:true,

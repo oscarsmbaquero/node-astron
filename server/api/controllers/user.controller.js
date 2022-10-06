@@ -195,7 +195,6 @@ const assignAviso = ('/', async (req, res, next) => {
 }
 })
 const reAssignAviso = ('/', async (req, res, next) => {
-  console.log('Me cago en tu puta madre');
   const { userId, estado, avisoId, idUserOld } = req.body;
     console.log(avisoId,'id_aviso');
     console.log(userId, 'id_tecnico');
