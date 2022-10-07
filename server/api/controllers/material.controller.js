@@ -7,7 +7,8 @@ import { Material } from "../models/Material.Model.js";
 const getMaterial = async (req,res,next) => {
 
     try {
-        const material = await Material.find().populate(({path:'user_name', select :'name'}));;
+        const material = await Material.find().populate(({path:'name_almacen', select :'name'}));
+        console.log(material,'material')
         
         return res.status(200).json(material);
     } catch (error) {
@@ -16,7 +17,6 @@ const getMaterial = async (req,res,next) => {
   };
 
   const addMaterial = async ( req, res, next) => {
-    console.log(req.body.tipo,'tipoooooooooooo')
     try {
         const NewMaterial = new Material({
           descripcion : req.body.descripcion,
@@ -42,14 +42,13 @@ const getMaterial = async (req,res,next) => {
 const getMaterialByTecnico = async (req, res, next) => {
 
   try {
-      console.log('Entro');
+      
 
       const { id } = req.params;
       //const { id: userId } = req.authority;populate(({path:'user_assigned', select :'name'}));
       //console.log(id,'id');
       const materialById = await Material.find({almacen : id})
-      //  .populate(({path:'user_name', select :'name'}));
-      console.log(materialById,'materialbyId2')
+        .populate(({path:'name_almacen', select :'name'}));
       return res.status(200).json(materialById);
       // return res.json({
       //     status: 200,
