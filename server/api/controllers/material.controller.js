@@ -8,7 +8,7 @@ const getMaterial = async (req,res,next) => {
 
     try {
         const material = await Material.find().populate(({path:'name_almacen', select :'name'}));
-        console.log(material,'material')
+        //console.log(material,'material')
         
         return res.status(200).json(material);
     } catch (error) {
@@ -26,8 +26,9 @@ const getMaterial = async (req,res,next) => {
           almacen : req.body.almacen,
           incidencia : req.body.incidencia,
           //image : req.body.image,
+         
         })
-
+        console.log(NewMaterial,'almacen')
         const newMaterialDB = await NewMaterial.save();
         return res.json({
             status: 201,
@@ -44,11 +45,13 @@ const getMaterialByTecnico = async (req, res, next) => {
   try {
       
 
-      const { id } = req.params;
+      const { almacen } = req.params;
+      console.log(almacen,'almacen')
       //const { id: userId } = req.authority;populate(({path:'user_assigned', select :'name'}));
       //console.log(id,'id');
-      const materialById = await Material.find({almacen : id})
-        .populate(({path:'name_almacen', select :'name'}));
+      const materialById = await Material.find({almacen : almacen})
+      console.log(materialById,'materialById')
+        //.populate(({path:'name_almacen', select :'name'}));
       return res.status(200).json(materialById);
       // return res.json({
       //     status: 200,

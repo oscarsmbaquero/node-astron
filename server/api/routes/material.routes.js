@@ -9,7 +9,7 @@ import { getMaterial, addMaterial, getMaterialByTecnico } from '../controllers/m
  const materialRoutes = express.Router();
 
  materialRoutes.get('/', getMaterial);
- materialRoutes.get("/:id", getMaterialByTecnico);
+ materialRoutes.get("/:almacen", getMaterialByTecnico);
  materialRoutes.post('/', addMaterial);
  //userRoutes.put('/edit', [isAuth, upload.single('image'), uploadToCloudinary], editUser);
  

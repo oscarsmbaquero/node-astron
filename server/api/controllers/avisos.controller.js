@@ -128,11 +128,11 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion }=req.body;
+    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion }=req.body;
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
-    console.log(tecnicoIntervencion,viaje,133);
+    //console.log(tecnicoIntervencion,viaje,133);
     const avisoUpdated = await Avisos.findByIdAndUpdate(
       id,
       {estado:estado}
@@ -168,6 +168,19 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { tecnicoIntervencion: tecnicoIntervencion } },
     { new: true }
   );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { materialIntervencion: materialIntervencion } },
+    { new: true }
+  );
+
+  //restar material pendiente de hacer 
+  // await Avisos.updateOne(
+  //   { _id: id },
+  //   { $push: { materialIntervencion: materialIntervencion } },
+  //   { new: true }
+  // );
+
 
    } catch (error) {
     
