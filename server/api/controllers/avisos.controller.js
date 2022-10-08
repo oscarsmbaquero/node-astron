@@ -1,6 +1,6 @@
 import { Avisos } from "../models/Avisos.Model.js";
 import { httpStatusCode } from "../../utils/httpStatusCode.js";
-
+import { Material } from "../models/Material.Model.js";
 
 
 
@@ -129,6 +129,7 @@ const AddIntervencion = async  (req, res, next) =>{
    try {    
     const { id } = req.params;
     const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion }=req.body;
+    console.log(materialIntervencion,'materialIntervencion');
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
@@ -174,12 +175,12 @@ const AddIntervencion = async  (req, res, next) =>{
     { new: true }
   );
 
-  //restar material pendiente de hacer 
-  // await Avisos.updateOne(
-  //   { _id: id },
-  //   { $push: { materialIntervencion: materialIntervencion } },
-  //   { new: true }
-  // );
+//  restar material pendiente de hacer 
+  const materialUpdated = await Material.findByIdAndUpdate(
+    materialIntervencion,
+    {estado:'Averiado'},
+  );
+
 
 
    } catch (error) {
