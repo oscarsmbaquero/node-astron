@@ -64,6 +64,24 @@ const getMaterialByTecnico = async (req, res, next) => {
   }
 };
 
+const deleteMaterial = async (req, res, next) => {
+  
+    try {
+      const { materialId } = req.params;
+      console.log(materialId,'materialId71');
+      const materialDelete = await Material.findByIdAndDelete(materialId);
 
-export { getMaterial, addMaterial, getMaterialByTecnico };
+      
+      return res.json({
+        status: 200,
+        message: httpStatusCode[200],
+        data: { material: materialDelete },
+      });
+    } catch (error) {
+      return next(error);
+    }
+};
+
+
+export { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial };
 //getMaterialByUser, addMaterial
