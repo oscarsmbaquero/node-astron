@@ -128,8 +128,8 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion, motivo }=req.body;
-    console.log(motivo,'materialIntervencion');
+    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion, motivo, totalHoras }=req.body;
+    console.log(totalHoras,'totalHoras');
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
@@ -178,6 +178,18 @@ const AddIntervencion = async  (req, res, next) =>{
     id,
     {motivo:motivo}
   );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { totalHoras: totalHoras } },
+    { new: true }
+  );
+  //elimino user_assigned al dejar aviso pendiente//no funciona. Revisar
+   const usserAsigned =await Avisos.updateOne(
+    { _id: id },
+    { $pull: { user_assigned:{name: tecnicoIntervencion}}},
+    { new: true }
+    );
+    
   await User.updateOne(
     { name: tecnicoIntervencion },
     { $pull: { assigned_avisos: id } },
@@ -204,7 +216,8 @@ const ShowIntervencion = async (req, res, next) =>{
     console.log('Entro o no entro');
     const { id } = req.params;
     console.log(id);
-    const avisoById = await Avisos.findById(id);
+    const avisoById = await Avisos.findById(id)
+    .populate({path:'materialIntervencion', select :'estado'})
     return res.status(200).json(avisoById);
     // return res.json({
     //     status: 200,

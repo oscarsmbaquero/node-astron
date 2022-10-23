@@ -14,6 +14,7 @@ const avisosSchema = new Schema(
     estado: { type: String, required: true },
     tecnico: { type: String, required: false },
     motivo: { type: String, required: false },
+    totalHoras: [{ type: Number, required: false }],
     intervencion: [{ type: String, required:true}],
     fecha_inicio: [{ type: String, required:true}],
     fecha_fin: [{type: String, required:true}],
@@ -22,8 +23,8 @@ const avisosSchema = new Schema(
     tecnicoIntervencion: [{type: String, required:true}],
     materialIntervencion: [{type: String, required:false}],
     user_assigned: { type: mongoose.Types.ObjectId, ref: 'User', required: false },
-    
-    user: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
+    //materialIntervencion: {type: mongoose.Types.ObjectId, ref:'Material', required:false},
+    //user: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,
