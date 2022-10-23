@@ -13,6 +13,7 @@ const avisosSchema = new Schema(
     prioridad: { type: String, required: true },
     estado: { type: String, required: true },
     tecnico: { type: String, required: false },
+    motivo: { type: String, required: false },
     intervencion: [{ type: String, required:true}],
     fecha_inicio: [{ type: String, required:true}],
     fecha_fin: [{type: String, required:true}],

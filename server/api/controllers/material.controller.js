@@ -68,7 +68,7 @@ const deleteMaterial = async (req, res, next) => {
   
     try {
       const { materialId } = req.params;
-      console.log(materialId,'materialId71');
+      
       const materialDelete = await Material.findByIdAndDelete(materialId);
 
       

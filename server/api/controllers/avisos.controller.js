@@ -1,7 +1,7 @@
 import { Avisos } from "../models/Avisos.Model.js";
 import { httpStatusCode } from "../../utils/httpStatusCode.js";
 import { Material } from "../models/Material.Model.js";
-
+import { User } from "../models/User.Model.js"
 
 
 const getAvisos = async ( req, res, next) =>{
@@ -128,8 +128,8 @@ const AddIntervencion = async  (req, res, next) =>{
   
    try {    
     const { id } = req.params;
-    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion }=req.body;
-    console.log(materialIntervencion,'materialIntervencion');
+    const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion, motivo }=req.body;
+    console.log(motivo,'materialIntervencion');
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
@@ -172,6 +172,15 @@ const AddIntervencion = async  (req, res, next) =>{
   await Avisos.updateOne(
     { _id: id },
     { $push: { materialIntervencion: materialIntervencion } },
+    { new: true }
+  );
+  const estadoUpdated = await Avisos.findByIdAndUpdate(
+    id,
+    {motivo:motivo}
+  );
+  await User.updateOne(
+    { name: tecnicoIntervencion },
+    { $pull: { assigned_avisos: id } },
     { new: true }
   );
 
