@@ -129,7 +129,7 @@ const AddIntervencion = async  (req, res, next) =>{
    try {    
     const { id } = req.params;
     const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion, motivo, totalHoras }=req.body;
-    console.log(totalHoras,'totalHoras');
+    //console.log(totalHoras,'totalHoras');
     // const avisoModify = new Avisos(req.body);
     // avisoModify._id = id;
     //modifico el estado
@@ -183,24 +183,23 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { totalHoras: totalHoras } },
     { new: true }
   );
-  //elimino user_assigned al dejar aviso pendiente//no funciona. Revisar
-   const usserAsigned =await Avisos.updateOne(
-    { _id: id },
-    { $pull: { user_assigned:{name: tecnicoIntervencion}}},
-    { new: true }
-    );
-    
   await User.updateOne(
     { name: tecnicoIntervencion },
     { $pull: { assigned_avisos: id } },
     { new: true }
   );
-
-//  restar material pendiente de hacer 
   const materialUpdated = await Material.findByIdAndUpdate(
     materialIntervencion,
     {estado:'Averiado'},
   );
+  //elimino user_assigned al dejar aviso pendiente//no funciona. Revisar
+  //  const usserAsigned =await Avisos.updateOne(
+  //   { _id: id },
+  //   { $pull: { user_assigned:{name: tecnicoIntervencion}}},
+  //   { new: true }
+  //   );
+    
+  
 
 
 
