@@ -7,8 +7,8 @@ import { Material } from "../models/Material.Model.js";
 const getMaterial = async (req,res,next) => {
 
     try {
-        const material = await Material.find().populate(({path:'name_almacen', select :'name'}));
-        //console.log(material,'material')
+        const material = await Material.find().populate(({path:'almacen', select :'name'}));
+        console.log(material,'materialSi o NO')
         
         return res.status(200).json(material);
     } catch (error) {
@@ -45,11 +45,11 @@ const getMaterialByTecnico = async (req, res, next) => {
   try {
       
 
-      const { almacen } = req.params;
-      console.log(almacen,'almacen')
+      const { id } = req.params;
+      console.log(id,'almacen')
       //const { id: userId } = req.authority;populate(({path:'user_assigned', select :'name'}));
       //console.log(id,'id');
-      const materialById = await Material.find({almacen : almacen})
+      const materialById = await Material.find({almacen : id})
       console.log(materialById,'materialById')
         //.populate(({path:'name_almacen', select :'name'}));
       return res.status(200).json(materialById);
@@ -82,6 +82,23 @@ const deleteMaterial = async (req, res, next) => {
     }
 };
 
+const traspasoMaterial = ('/', async (req, res, next) => {  
+  
+  const { userSelected, materialId } = req.body;
+  console.log(userSelected,'userSelected');
+  console.log(materialId,'materialId');
+  try {
+    const estadoModify = await Material.findByIdAndUpdate(
+      materialId,
+      {almacen:userSelected}
+    );
+    console.log(estadoModify,'estadoMOdify');
+    return res.status(200).json(estadoModify);
+} catch (error) {
+    return next(error);
+}
+})
 
-export { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial };
+
+export { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspasoMaterial };
 //getMaterialByUser, addMaterial
