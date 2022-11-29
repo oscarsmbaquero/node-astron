@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { isAuth } from '../../authentication/jwt.js';
 import { upload, uploadToCloudinary } from '../../middlewares/file.middleware.js';
 
-import { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspasoMaterial } from '../controllers/material.controller.js';
+import { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspasoMaterial, envioAlmacen } from '../controllers/material.controller.js';
 
  const materialRoutes = express.Router();
 
@@ -13,6 +13,7 @@ import { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspas
  materialRoutes.post('/', addMaterial);
  materialRoutes.delete("/:materialId", deleteMaterial);
  materialRoutes.put('/ubicar', traspasoMaterial);
+ materialRoutes.put('/envioAlmacen', envioAlmacen);
  //userRoutes.put('/edit', [isAuth, upload.single('image'), uploadToCloudinary], editUser);
  
 

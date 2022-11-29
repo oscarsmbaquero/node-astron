@@ -129,11 +129,10 @@ const AddIntervencion = async  (req, res, next) =>{
    try {    
     const { id } = req.params;
     const { intervencion, km, fecha_fin, fecha_inicio, estado, viaje, tecnicoIntervencion, materialIntervencion, motivo, totalHoras }=req.body;
-    //console.log(totalHoras,'totalHoras');
-    // const avisoModify = new Avisos(req.body);
-    // avisoModify._id = id;
-    //modifico el estado
-    //console.log(tecnicoIntervencion,viaje,133);
+    console.log(tecnicoIntervencion,'tecnicoIntervencion');
+    console.log(id,'id_aviso');
+
+
     const avisoUpdated = await Avisos.findByIdAndUpdate(
       id,
       {estado:estado}
@@ -192,13 +191,29 @@ const AddIntervencion = async  (req, res, next) =>{
     materialIntervencion,
     {estado:'Averiado'},
   );
+
+  const deleteAvisoUSer = await User.findByIdAndUpdate(
+    tecnicoIntervencion,
+      { $pull: { assigned_avisos: id }},
+      { new: true }
+  );
+  console.log(deleteAvisoUSer,13);
+
+  
+  // const deleteUSerAviso = await Avisos.findByIdAndUpdate(
+  //   id,
+  //     { $pull: { user_assigned: tecnicoIntervencion }},
+  //     { new: true }
+  // );
+  // console.log(deleteUSerAviso,14)
+
   //elimino user_assigned al dejar aviso pendiente//no funciona. Revisar
   //  const usserAsigned =await Avisos.updateOne(
   //   { _id: id },
   //   { $pull: { user_assigned:{name: tecnicoIntervencion}}},
   //   { new: true }
   //   );
-    
+  //   console.log(usserAsigned,'user');
   
 
 
@@ -212,7 +227,7 @@ const AddIntervencion = async  (req, res, next) =>{
 const ShowIntervencion = async (req, res, next) =>{
 
   try {
-    console.log('Entro o no entro');
+
     const { id } = req.params;
     console.log(id);
     const avisoById = await Avisos.findById(id)
@@ -228,129 +243,5 @@ const ShowIntervencion = async (req, res, next) =>{
     return next(error)
 }
 }
-
-
-
-
-// //FUNCION PARA VINCULAR USUARIO A OFERTA DE TRABAJO- EN PRUEBAS-- OSCAR
-// const addUserToJob = async (req, res, next) => {
-
-//     try {
-//         const { _id: jobId } = req.body;
-//         const { id: userId } = req.authority;
-
-//         const findJob = await Job.findById(jobId);
-//         const findUser = await User.findById(userId);
-
-//         //controlar que no se pueda agregar el mismo usuario o trabajo dos veces
-//         if (findJob.candidate_list.indexOf(userId) !== -1 || findUser.applied_jobs.indexOf(jobId) !== -1) {
-//             const error = new Error('this user already applied to this job');
-//             return next(error);
-//         }
-
-//         const newNotification = await Notification.create({
-//             from: userId,
-//             to: findJob.recruiter_id,
-//             view_status: "not seen",
-//             jobId: jobId,
-//             type: "job_application"
-//         });
-
-//         if (!newNotification) {
-//             const error = new Error('error creating the notification');
-//             return next(error);
-//         };
-
-//         await User.updateOne(
-//             { _id: userId },
-//             { $push: { applied_jobs: jobId } },
-//             { new: true }
-//         );
-
-//         await Job.updateOne(
-//             { _id: jobId },
-//             { $push: { candidate_list: userId } },
-//             { new: true }
-//         );
-//         return res.status(200).json(findJob);
-//     } catch (error) {
-//         return next(error);
-//     }
-// }
-
-// const deleteUserFromJob = async (req, res, next) => {
-
-//     try {
-//         const { _id: jobId } = req.body;
-//         const { id: userId } = req.authority;
-
-//         await User.updateOne(
-//             { _id: userId },
-//             { $pull: { applied_jobs: jobId } }
-//         );
-
-//         const deleteUserFromJob = await Job.findByIdAndUpdate(
-//             jobId,
-//             { $pull: { candidate_list: userId } }
-//         );
-//         return res.status(200).json(deleteUserFromJob);
-//     } catch (error) {
-//         return next(error);
-//     }
-// }
-
-//funcion para eliminar subscripciond e usuario, En pruebas. Oscar
-//   const deleteUserFromJob = async (req, res, next) => {
-
-//     try {       
-//     const { _id } = req.body;  
-//     const { userId } = req.body;
-//     //console.log(_id,userId,5);
-//     const updatedJob = await Job.findByIdAndUpdate(
-//         _id ,
-//           { $push: { candidate_list: userId } },
-//           { new: true }
-//       );
-//       return res.status(200).json(updatedJob);
-//   } catch (error) {
-//       return next(error);
-//   }
-//   }
-
-// const findJobByName = async (req, res, next) => {
-//     const { name } = req.params;
-//     console.log(name);
-//     try {
-//         const companieByName = await Companies.find({ name: name });
-//         return res.json({
-//             // status: 200,
-//             // message: httpStatusCode[200],
-//             data: { companie: companieByName }
-//         })
-//     } catch (error) {
-//         next(error)
-//     }
-// };
-
-// const editNamejob = async (req, res, next) => {
-//     try {
-//         const { id } = req.params;
-//         const NameJob = new Companies(req.body);
-//         //Para evitar que se modifique el id de mongo:
-//         Companies._id = id;
-//         const NameJobUpdate = await Companies.findByIdAndUpdate(
-//             id,
-//             NameJob
-//         );
-//         return res.json({
-//             status: 200,
-//             message: httpStatusCode[200],
-//             data: { namejob: NameJobUpdate },
-//         });
-//     } catch (error) {
-//         return next(error);
-//     }
-// };
-
 
 export { getAvisos, createAvisos, deleteAviso, editAviso, getAvisoById, AddIntervencion, ShowIntervencion };

@@ -9,7 +9,7 @@ const userSchema = new Schema(
     surname: { type: String, required: false },
     account_type: { type: String, required: true },
     image: { type: String },
-    assigned_avisos: [{ type: mongoose.Types.ObjectId, ref: 'Avisos' }],
+    assigned_avisos: { type: mongoose.Types.ObjectId, ref: 'Avisos' },
   },
   {
     timestamps: true,

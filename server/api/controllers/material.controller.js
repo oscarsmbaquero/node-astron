@@ -8,7 +8,6 @@ const getMaterial = async (req,res,next) => {
 
     try {
         const material = await Material.find().populate(({path:'almacen', select :'name'}));
-        console.log(material,'materialSi o NO')
         
         return res.status(200).json(material);
     } catch (error) {
@@ -98,7 +97,23 @@ const traspasoMaterial = ('/', async (req, res, next) => {
     return next(error);
 }
 })
+const envioAlmacen = ('/', async (req, res, next) => {  
+  
+  const { mat, tecnicoEnvio } = req.body;
+  console.log(mat._id,'mat');
+  console.log(tecnicoEnvio,'tecnicoEnvio');  
+  try {
+    const estadoModify = await Material.findByIdAndUpdate(
+      mat._id,
+      {almacen:'6367f71f69ac0f339a16d02f'}//id del almacen
+    );
+    console.log(estadoModify,'estadoMOdify');
+    return res.status(200).json(estadoModify);
+} catch (error) {
+    return next(error);
+}
+})
 
 
-export { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspasoMaterial };
+export { getMaterial, addMaterial, getMaterialByTecnico, deleteMaterial, traspasoMaterial, envioAlmacen };
 //getMaterialByUser, addMaterial

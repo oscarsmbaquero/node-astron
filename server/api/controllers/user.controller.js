@@ -196,10 +196,7 @@ const assignAviso = ('/', async (req, res, next) => {
 })
 const reAssignAviso = ('/', async (req, res, next) => {
   const { userId, estado, avisoId, idUserOld } = req.body;
-    console.log(avisoId,'id_aviso');
-    console.log(userId, 'id_tecnico');
-    console.log(estado, 'estado');
-    console.log(idUserOld,'tecnico antiguo');
+  
  try {
     
 
@@ -230,7 +227,6 @@ const updatedAvisoUser2 = await User.findByIdAndUpdate(
 const getUserById = async (req, res, next) => {
 
   try {
-      console.log('Entrossss');
       const { id } = req.params;
       console.log(id);
       const userById = await User.findById(id)
