@@ -182,22 +182,27 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { totalHoras: totalHoras } },
     { new: true }
   );
-  await User.updateOne(
-    { name: tecnicoIntervencion },
-    { $pull: { assigned_avisos: id } },
+  await Avisos.updateOne(
+  {_id: id},
+    { $pull: { user_assigned:tecnicoIntervencion } },
     { new: true }
   );
+  await User.updateOne(
+    {_id: tecnicoIntervencion},
+      { $pull: { assigned_avisos:id } },
+      { new: true }
+    );
   const materialUpdated = await Material.findByIdAndUpdate(
     materialIntervencion,
     {estado:'Averiado'},
   );
 
-  const deleteAvisoUSer = await User.findByIdAndUpdate(
-    tecnicoIntervencion,
-      { $pull: { assigned_avisos: id }},
-      { new: true }
-  );
-  console.log(deleteAvisoUSer,13);
+  // const deleteAvisoUSer = await User.findByIdAndUpdate(
+  //   tecnicoIntervencion,
+  //     { $pull: { assigned_avisos: id }},
+  //     { new: true }
+  // );
+  // console.log(deleteAvisoUSer,13);
 
   
   // const deleteUSerAviso = await Avisos.findByIdAndUpdate(
