@@ -234,9 +234,12 @@ const ShowIntervencion = async (req, res, next) =>{
   try {
 
     const { id } = req.params;
-    console.log(id);
     const avisoById = await Avisos.findById(id)
-    .populate({path:'materialIntervencion', select :'estado'})
+    .populate(({path:'tecnicoIntervencion', select :'name'}))
+    //.populate(({path:'materialIntervencion', select :'descripcion'}));
+    
+    //.populate({path:'materialIntervencion', select :'estado'})
+    console.log(avisoById.materialIntervencion,'materialIntervencion')
     return res.status(200).json(avisoById);
     // return res.json({
     //     status: 200,
