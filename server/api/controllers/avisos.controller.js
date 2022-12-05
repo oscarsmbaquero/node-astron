@@ -10,7 +10,7 @@ const getAvisos = async ( req, res, next) =>{
         const avisos = await Avisos.find()
         .populate(({path:'tecnicoIntervencion', select :'name'}))
         .populate(({path:'materialIntervencion', select :'descripcion'}))
-        // .populate(({path:'user_assigned', select :'name'}));
+         .populate(({path:'user_assigned', select :'name'}));
         //  .populate(({path:'material_consumido', select :'descripcion'}));
         //console.log(avisos);
         return res.status(200).json(avisos);
