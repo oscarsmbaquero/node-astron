@@ -172,11 +172,6 @@ const AddIntervencion = async  (req, res, next) =>{
     { $push: { tecnicoIntervencion: tecnicoIntervencion } },
     { new: true }
   );
-  await Avisos.updateOne(
-    { _id: id },
-    { $push: { materialIntervencion: materialIntervencion } },
-    { new: true }
-  );
   const estadoUpdated = await Avisos.findByIdAndUpdate(
     id,
     {motivo:motivo}
@@ -199,6 +194,11 @@ const AddIntervencion = async  (req, res, next) =>{
   const materialUpdated = await Material.findByIdAndUpdate(
     materialIntervencion,
     {estado:'Averiado'},
+  );
+  await Avisos.updateOne(
+    { _id: id },
+    { $push: { materialIntervencion: materialIntervencion } },
+    { new: true }
   );
 
   // const deleteAvisoUSer = await User.findByIdAndUpdate(
