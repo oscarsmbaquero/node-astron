@@ -20,6 +20,7 @@ const avisosSchema = new Schema(
     fecha_fin: [{type: String, required:true}],
     km: [{type: Number, required:true}],
     viaje: [{type: Number, required:true}],
+    item: [{type: mongoose.Types.ObjectId, ref:'Items', required:true}],
     tecnicoIntervencion: [{type: mongoose.Types.ObjectId, ref: 'User', required:false}],
     materialIntervencion: [{type: mongoose.Types.ObjectId, ref:'Material', required:false}],
     user_assigned: { type: mongoose.Types.ObjectId, ref: 'User', required: false },
